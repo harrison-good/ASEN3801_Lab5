@@ -106,27 +106,27 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     figure(fig(5))
     subplot(4,1,1)
     plot(time, de, col)
-    title('\delta_e')
+    title('Elevator Input')
     xlabel("Time (s)")
-    ylabel('Ctrl Force (N)')
+    ylabel('\delta_e (deg)')
     hold on
     subplot(4,1,2)
     plot(time, da, col)
-    title('\delta_a')
+    title('Aileron Input')
     xlabel("Time (s)")
-    ylabel('Ctrl Mom (Nm)')
+    ylabel('\delta_a (deg)')
     hold on
     subplot(4,1,3)
     plot(time, dr, col)
-    title("\delta_r")
+    title("Rudder Input")
     xlabel("Time (s)")
-    ylabel('Ctrl Mom (Nm)')
+    ylabel('\delta_r (deg)')
     hold on
     subplot(4,1,4)
     plot(time, dt, col)
-    title('\delta_t')
+    title('Thrust Input')
     xlabel("Time (s)")
-    ylabel('Ctrl Mom (Nm)')
+    ylabel('\delta_t')
     ylim ([0 1]);
     hold on
 
