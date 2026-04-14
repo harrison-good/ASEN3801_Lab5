@@ -13,10 +13,15 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     p = aircraft_state_array(:,10);
     q = aircraft_state_array(:,11);
     r = aircraft_state_array(:,12);
-    de = rad2deg(control_input_array(1,:));
-    da = rad2deg(control_input_array(2,:));
-    dr = rad2deg(control_input_array(3,:));
-    dt = control_input_array(4,:);
+    de = rad2deg(control_input_array(:,1));
+    da = rad2deg(control_input_array(:,2));
+    dr = rad2deg(control_input_array(:,3));
+    dt = control_input_array(:,4);
+
+    outputFolder = 'OverleafPlots'; 
+    if ~isfolder(outputFolder)
+        mkdir(outputFolder); % Create folder if it doesn't exist
+    end
 
     % plot inertial position assuming unit is meters
     figure(fig(1))
@@ -38,6 +43,8 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel('Time (s)')
     ylabel("Z (m)")
     hold on
+    filename = fullfile(outputFolder, strcat(fig(1)+".png"));
+    saveas(fig(1), filename);
 
     % plot euler angles assuming unit is radians
     figure(fig(2))
@@ -59,6 +66,8 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel('Time (s)')
     ylabel("Euler Yaw (rad)")
     hold on
+    filename = fullfile(outputFolder, strcat(fig(2)+".png"));
+    saveas(fig(2), filename);
 
     % plot velocity assuming unit is m/s
     figure(fig(3))
@@ -80,6 +89,8 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel('Time (s)')
     ylabel("Velocity Body z (m/s)")
     hold on
+    filename = fullfile(outputFolder, strcat(fig(3)+".png"));
+    saveas(fig(3), filename);
 
     % plot angular velocity assuming unit is rad/s
     figure(fig(4))
@@ -101,6 +112,8 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     xlabel('Time (s)')
     ylabel("Yaw Rate (rad/s)")
     hold on
+    filename = fullfile(outputFolder, strcat(fig(4)+".png"));
+    saveas(fig(4), filename);
 
     % plot control inputs assuming units are N and Nm
     figure(fig(5))
@@ -129,6 +142,8 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     ylabel('\delta_t')
     ylim ([0 1]);
     hold on
+    filename = fullfile(outputFolder, strcat(fig(5)+".png"));
+    saveas(fig(5), filename);
 
     % plot the flight path with markers for start and end
     figure(fig(6))
@@ -141,4 +156,6 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     hold on
     grid on
     grid minor
+    filename = fullfile(outputFolder, strcat(fig(6)+".png"));
+    saveas(fig(6), filename);
 end

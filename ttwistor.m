@@ -25,7 +25,7 @@
 % All dimensional parameters in SI units
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clear; close all; clc
+clear; close all; clc;
 
 aircraft_parameters.g = 9.81;           % Gravitational acceleration [m/s^2]
 
@@ -143,18 +143,25 @@ aircraft_parameters.CYr = 0.213412;
 % START CODE HERE: CALL TO ODE45 %
 
 % initial states
-statevector_0 = [0 0 -1800 0 .02780 0 20.99 0 .5837 0 0 0;
+statevector_0 = [0 0 -1609.34 0 0 0 21 0 0 0 0 0;
+    0 0 -1800 0 .02780 0 20.99 0 .5837 0 0 0;
     0 0 -1800 .2618 -0.2094 4.7124 19 3 -2 .001396 -.00349 0]';
 % control vector
-u_0 = [.1079 0 0 .3182;
+u_0 = [0 0 0 0;
+    .1079 0 0 .3182;
     .08727 .03490 -.22689 .3]';
 % wind vector
 wind_inertial = [0,0,0];
 
-for i = 1
-    [t,aircraft_state] = ode45(@(t, aircraft_state) AircraftEOM(t, aircraft_state, u_0(:,i), wind_inertial, aircraft_parameters),[0 10],statevector_0(:,i));
+for i = 1:3
+    % Run the simulation
+    [t, aircraft_state] = ode45(@(t, aircraft_state) AircraftEOM(t, aircraft_state, u_0(:,i), wind_inertial, aircraft_parameters), [0 200], statevector_0(:,i));
 
-    fig = (2201:2206) + i*10;
-    PlotAircraftSim(t,aircraft_state,u_0(:,i),fig,'b')
+    % Correctly populate the control array for plotting
+    num_steps = length(t);
+    u_plot = repmat(u_0(:,i)', num_steps, 1); % Create a matrix where every row is the constant control input
+
+    fig_indices = (2201:2206) + i*10;
+    PlotAircraftSim(t, aircraft_state, u_plot, fig_indices, 'b')
 
 end

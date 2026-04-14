@@ -3,7 +3,7 @@ function xdot = AircraftEOM(time, aircraft_state, aircraft_surfaces, wind_inerti
     %{ Creates the derivate xdot from the original statevector x and parameters
     % that the aircraft is in %}
     
-    density = atmosisa(-aircraft_state(3));
+    [~,~,~,density] = atmosisa(-aircraft_state(3));
     [aero_forces, aero_moments] = AeroForcesAndMoments(aircraft_state, aircraft_surfaces, wind_inertial, density, aircraft_parameters);
     
     
