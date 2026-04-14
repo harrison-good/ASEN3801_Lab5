@@ -1,18 +1,18 @@
 function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, col)
     % extract variables from state array
     % assumes each row is a different variable
-    xE = aircraft_state_array(1,:);
-    yE = aircraft_state_array(2,:);
-    zE = aircraft_state_array(3,:);
-    roll = aircraft_state_array(4,:);
-    pitch = aircraft_state_array(5,:);
-    yaw = aircraft_state_array(6,:);
-    u = aircraft_state_array(7,:);
-    v = aircraft_state_array(8,:);
-    w = aircraft_state_array(9,:);
-    p = aircraft_state_array(10,:);
-    q = aircraft_state_array(11,:);
-    r = aircraft_state_array(12,:);
+    xE = aircraft_state_array(:,1);
+    yE = aircraft_state_array(:,2);
+    zE = aircraft_state_array(:,3);
+    roll = aircraft_state_array(:,4);
+    pitch = aircraft_state_array(:,5);
+    yaw = aircraft_state_array(:,6);
+    u = aircraft_state_array(:,7);
+    v = aircraft_state_array(:,8);
+    w = aircraft_state_array(:,9);
+    p = aircraft_state_array(:,10);
+    q = aircraft_state_array(:,11);
+    r = aircraft_state_array(:,12);
     de = rad2deg(control_input_array(1,:));
     da = rad2deg(control_input_array(2,:));
     dr = rad2deg(control_input_array(3,:));
@@ -133,7 +133,7 @@ function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, c
     % plot the flight path with markers for start and end
     figure(fig(6))
     plot3(xE(1), yE(1), -zE(1), 'og', xE, yE, -zE, col, xE(end), yE(end), -zE(end), 'or')
-    title('Quadcoptor Flight Path')
+    title('Aircraft Flight Path')
     xlabel('X (m)')
     ylabel('Y (m)')
     zlabel('Height (m)')
