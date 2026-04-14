@@ -17,8 +17,9 @@ function xdot = AircraftEOM(time, aircraft_state, aircraft_surfaces, wind_inerti
     p = aircraft_state(10);
     q = aircraft_state(11);
     r = aircraft_state(12);
+    a = aircraft_parameters;
     
-    xdot = zeros(12:1);
+    xdot = zeros(12,1);
     DCM = [cos(theta)*cos(psi) sin(phi)*sin(theta)*cos(psi)-cos(phi)*sin(psi) cos(phi)*sin(theta)*cos(psi)+sin(phi)*sin(psi);
            cos(theta)*sin(psi) sin(phi)*sin(theta)*sin(psi)+cos(phi)*cos(psi) cos(phi)*sin(theta)*sin(psi)-sin(phi)*cos(psi);
            -sin(theta) sin(phi)*cos(theta) cos(phi)*cos(theta)];
@@ -30,10 +31,8 @@ function xdot = AircraftEOM(time, aircraft_state, aircraft_surfaces, wind_inerti
     xdot(4:6) = T * aircraft_state(10:12);
     
     xdot(7:9) = [r*vE-q*wE; p*wE-r*uE;q*uE-p*vE] +... 
-        g*[-sin(theta);cos(theta)*sin(phi);cos(theta)*cos(phi)] +...
-        (1/m)*(aero_forces);
-
-    a = aircraft_parameters;
+        a.g*[-sin(theta);cos(theta)*sin(phi);cos(theta)*cos(phi)] +...
+        (1/a.m)*(aero_forces);
 
     Gamma = a.Ix*a.Iz - a.Ixz^2;
     Gamma1 = a.Ixz*(a.Ix-a.Iy+a.Iz)/Gamma;
